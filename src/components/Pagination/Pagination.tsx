@@ -36,13 +36,11 @@ export const Pagination: React.FC<PaginationProps> = ({
     }
   };
 
-  const handlePageClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    page: number,
-  ) => {
-    e.preventDefault();
-    onPageChange(page);
-  };
+  const handlePageClick =
+    (page: number) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      onPageChange(page);
+    };
 
   return (
     <div>
@@ -50,7 +48,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
           <a
             data-cy="prevLink"
-            aria-disabled={currentPage === 1 && 'true'}
+            aria-disabled={currentPage === 1 ? 'true' : 'false'}
             className="page-link"
             href="#prev"
             onClick={handlePrevClick}
@@ -68,7 +66,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               data-cy="pageLink"
               className="page-link"
               href={`#${page}`}
-              onClick={e => handlePageClick(e, page)}
+              onClick={handlePageClick(page)}
             >
               {page}
             </a>
@@ -80,9 +78,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         >
           <a
             data-cy="nextLink"
+            aria-disabled={currentPage === totalPages ? 'true' : 'false'}
             className="page-link"
             href="#next"
-            aria-disabled={currentPage === totalPages && 'true'}
             onClick={handleNextClick}
           >
             »
